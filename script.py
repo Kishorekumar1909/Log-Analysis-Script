@@ -1,4 +1,5 @@
 import re
+import csv
 
 def Count_request(log_file):
     try:
@@ -22,13 +23,16 @@ def Count_request(log_file):
                 #print(IP_counter)
                 for IP, count in IP_counter:
                     print(f"{IP:<20}{count}")
+                print()
+                return IP_counter
             else:
                 print("IP Address not found in given logfile")
-        print()
+                return None
+            
     except Exception as error:
         print(error)
 
-def Most_fequent_endpoint(log_file):
+def Most_frequent_endpoint(log_file):
     try:
         with open(log_file, 'r') as file:
             endpoint_pattern = r'\"[A-Z]+\s(/[^\s]*)'
@@ -47,11 +51,13 @@ def Most_fequent_endpoint(log_file):
 
                 endpoint_counter = sorted(endpoint_counter.items(), key=lambda x:x[1], reverse=True)
                 frequent_endpoint = endpoint_counter[0]
-                print(4*'-',"Most Frequently Acessed Endpoint",4*'-')
-                print(f'\t{frequent_endpoint[0]} (Acessed {frequent_endpoint[1]} Times)')
+                print(4*'-',"Most Frequently Accessed Endpoint",4*'-')
+                print(f'\t{frequent_endpoint[0]} (Accessed {frequent_endpoint[1]} Times)')
+                print()
+                return frequent_endpoint
             else:
                 print("No endpoint found in log file")
-        print()
+                return None
     except Exception as error:
         print(error)
 
@@ -77,14 +83,45 @@ def Detect_suspicious_activity(log_file, thershold = 10):
                 print(f"{'IP ADDRESS':<20}{'Failed Login Atempts'}")
                 for ip, count in suspicious_IPs.items():
                     print(f"{ip:<20}{count}")
+                print()
+                return suspicious_IPs
             else:
                 print(5*"-","No Suspicious Activity Detected",5*"-")
+                return None
     except Exception as error:
         print(error)
     print()
 
+def save_as_csv(count_request_result, frequent_endpoint_result, suspicious_activity_result):
+    with open('log_analysis_results.csv','w',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        if count_request_result is not None:
+            writer.writerow(["Request per IP Address"])
+            writer.writerow(["IP Address", "Request Count"])
+            for ip, count in count_request_result:
+                writer.writerow([ip, count])
+        writer.writerow([])
 
-Count_request("sample.log")
-Most_fequent_endpoint("sample.log")
-Detect_suspicious_activity("sample.log",5)
+        if frequent_endpoint_result is not None:
+            writer.writerow(["Most Frequently Acessed Endpoint"])
+            writer.writerow(["Endpoint", "Access Count"])
+            endpoint, count = frequent_endpoint_result[0], frequent_endpoint_result[1]
+            writer.writerow([endpoint, count])
+        writer.writerow([])
 
+        if suspicious_activity_result is not None:
+            writer.writerow(["Suspicious Activity Detected"])
+            writer.writerow(["IP Address", "Failded login Count"])
+            for ip, count in suspicious_activity_result.items():
+                writer.writerow([ip, count])
+        else:
+            writer.writerow(["No Suspicious Activity Detected"])
+        writer.writerow([])
+    print("Results saved as CSV file")
+
+log_file = input("Enter the log file name:  ")
+print() 
+count_request_result = Count_request(log_file)
+frequent_endpoint_result = Most_frequent_endpoint(log_file)
+suspicious_activity_result = Detect_suspicious_activity(log_file,5)
+save_as_csv(count_request_result, frequent_endpoint_result, suspicious_activity_result)
