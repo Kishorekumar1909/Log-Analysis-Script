@@ -1,4 +1,4 @@
-import re
+import re # RegEx is use to find  or search a particular string with patterns
 import csv
 
 # Function is use to Request Count in IP Address
