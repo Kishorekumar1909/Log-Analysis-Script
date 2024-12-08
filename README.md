@@ -56,9 +56,11 @@ The script performs the following tasks:
 python script.py
 ```
 
+
 **Step-3:** Enter the file name and make sure file is in 'script.py' file location.
 
 ![C__Windows_System32_cmd exe - python  script py 12_8_2024 12_18_17 AM](https://github.com/user-attachments/assets/af55cadf-dbdf-4e3c-82df-cefcdbb5752c)
+
 
 
 **Step-4:** Run the command to view the results in CSV file<br> 
