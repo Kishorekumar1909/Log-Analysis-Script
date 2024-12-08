@@ -15,24 +15,24 @@ This Python script analyzes web server log files to extract useful information a
 1. Functionalities
 The script performs the following tasks:
 
-1.1 Count Requests per IP Address:
+  1.1 Count Requests per IP Address:
 
     * Extracts all IP addresses from the log file.
     * Counts how many requests were made by each IP.
     * Displays the results in descending order.
 
-1.2 Identify the Most Frequently Accessed Endpoint:
+  1.2 Identify the Most Frequently Accessed Endpoint:
 
     * Extracts resource paths (e.g., /home, /login) from the log file.
     * Determines the most accessed endpoint and its access count.
 
-1.3 Detect Suspicious Activity (Brute Force Detection):
+  1.3 Detect Suspicious Activity (Brute Force Detection):
 
     * Identifies failed login attempts based on specific patterns (e.g., HTTP 401 or "Invalid credentials").
-    * Flags IP addresses exceeding a threshold of failed login attempts (default: 10).
+    * Flags IP addresses exceeding a threshold of failed login attempts (default: 10). I used thershold as 5 in screenshots output.
     * Displays flagged IP addresses and their failed login counts.
 
-1.4 Save Results to CSV:
+  1.4 Save Results to CSV:
 
     Organizes the results into a structured format and saves them to a file named log_analysis_results.csv with three sections:
 
@@ -68,7 +68,9 @@ log_analysis_results.csv
 ![script py - Log Analysis - Visual Studio Code 12_8_2024 5_53_59 PM](https://github.com/user-attachments/assets/75dfb0b6-8855-4f2e-aeda-d936f6604345)
 
 
+
 ## Screenshots
+
 
 ![C__Windows_System32_cmd exe - python  script py 12_8_2024 12_18_17 AM](https://github.com/user-attachments/assets/af55cadf-dbdf-4e3c-82df-cefcdbb5752c)
 
